@@ -5,6 +5,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+@font-face {
+  font-family: "Wimpy";
+  src: url(../fonts/DiaryOfAWimpyKidFont-Regular.ttf) format("truetype");
+}
 
 a {
   color: inherit;

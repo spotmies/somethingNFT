@@ -1,0 +1,29 @@
+.home-parent {
+  font-family: "Wimpy";
+  .dummy {
+    width: 20%;
+  }
+  .home {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .head {
+    text-align: center;
+    font-size: 70px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .icon-links {
+    // padding-left: 30%;
+    margin-right: 20px;
+    img {
+      height: 35px;
+      margin-left: 60px;
+      cursor: pointer;
+    }
+  }
+}
