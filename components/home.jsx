@@ -1,4 +1,6 @@
 import React from "react";
+import Game from "../pages/game";
+import Mint from "./mint";
 
 export default function HomePage() {
   return (
@@ -12,6 +14,8 @@ export default function HomePage() {
           <img src="/images/twit.png" />
         </div>
       </div>
+      <Mint />
+      <Game />
     </div>
   );
 }

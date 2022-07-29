@@ -1,4 +1,8 @@
 .home-parent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh;
   font-family: "Wimpy";
   .dummy {
     width: 20%;
@@ -25,5 +29,45 @@
       margin-left: 60px;
       cursor: pointer;
     }
+  }
+  .pointer {
+    cursor: pointer;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .mint-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .mint-counter {
+      font-size: 30px;
+    }
+  }
+  .your-mint {
+    p {
+      font-size: 38px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    img {
+      height: 40px;
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+  .center-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
   }
 }
