@@ -7,7 +7,8 @@ export default function HomePage() {
     <div className="home-parent">
       <div className="home">
         <div className="dummy" />
-        <p className="head">Something</p>
+        <div className="dummy" />
+        {/* <p className="head">Something</p> */}
         <div className="icon-links">
           <img src="/images/e1.png" />
           <img src="/images/open.png" />

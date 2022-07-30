@@ -10,6 +10,14 @@ body {
   src: url(../fonts/DiaryOfAWimpyKidFont-Regular.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "candle";
+  src: url(../fonts/Candle.ttf) format("truetype");
+}
+@font-face {
+  font-family: "agency";
+  src: url(../fonts/agency_fb.ttf) format("truetype");
+}
 a {
   color: inherit;
   text-decoration: none;

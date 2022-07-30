@@ -1,0 +1,138 @@
+* {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+.char-image {
+  height: 150px;
+}
+.tree-image {
+  height: 80px;
+}
+.game {
+  /* z index hight */
+  z-index: 999;
+  width: 100%;
+  height: fit-content;
+  padding-top: 120px;
+  /* height: 200px; */
+  /* border: 1px solid black; */
+  margin: auto;
+  // overflow: auto;
+  overflow-y: hidden;
+}
+.game-controls {
+  margin-left: 7%;
+}
+.game-controls img {
+  margin-top: 10px;
+}
+.game-main-div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.game-parent {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
+  margin-right: 0px;
+  margin-left: auto;
+  width: 70%;
+}
+.bottom-line {
+  width: 100%;
+  height: 2px;
+  background-color: black;
+}
+#character {
+  /* width: 20px;
+  height: 50px;
+  background-color: red; */
+  position: relative;
+  /* top: 100px; */
+  bottom: -100px;
+  left: 90%;
+  /* z-i ndex: 9999; */
+}
+.animate {
+  animation: jump 0.25s linear;
+}
+@keyframes jump {
+  0% {
+    top: -20px;
+  }
+  30% {
+    top: -110px;
+  }
+  70% {
+    top: -110px;
+  }
+  100% {
+    top: -20px;
+  }
+}
+.play-image {
+  position: relative;
+  top: 20px;
+  left: 30%;
+}
+
+#block {
+  /* background-color: blue; */
+  /* width: 20px;
+  height: 20px; */
+  position: relative;
+  /* top: -90px; */
+  bottom: -10px;
+  left: 50%;
+  animation: block 1s infinite linear;
+}
+@keyframes block {
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+p {
+  text-align: center;
+}
+// css for mobile view
+@media (max-width: 550px) {
+  .game {
+    padding-top: 70px;
+  }
+  .game-main-div {
+    flex-direction: column;
+  }
+  .game-parent {
+    width: 100%;
+    margin: 0 auto !important;
+  }
+  .char-image {
+    height: 70px;
+  }
+  .tree-image {
+    height: 30px;
+  }
+  #character {
+    bottom: -50px;
+  }
+  @keyframes jump {
+    0% {
+      top: -20px;
+    }
+    30% {
+      top: -60px;
+    }
+    70% {
+      top: -60px;
+    }
+    100% {
+      top: -20px;
+    }
+  }
+}
