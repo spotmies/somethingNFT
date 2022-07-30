@@ -35,6 +35,7 @@ export default function Mint() {
   // 
   const [wallets, setWallets] = useState("");
   const [currentMintCount, setCurrentMintCount] = useState(0);
+  const [NFTCount, setNFTCount] = useState(1);
   const [walletAddress, setWalletAddress] = useState("");
   // const [quantity, setQuantity] = useState(1);
   // const [chainId, setChainId] = useState(1);
@@ -171,19 +172,19 @@ export default function Mint() {
     // const supply = await contract.suppliedNFTs();
     // setSupply(supply);
     try {
-      if (shitCount < 1) {
+      if (NFTCount < 1) {
         alert("Please enter valid quantity");
         return;
       }
       
-      if (currentMintCount + shitCount > 1000) {
-        var ethValue = shitCount * 0.003;
+      if (currentMintCount + NFTCount > 1000) {
+        var ethValue = NFTCount * 0.003;
       } else {
-        var ethValue = shitCount * 0;
+        var ethValue = NFTCount * 0;
       }
       
       getContract()
-        .mint(shitCount, {
+        .mint(NFTCount, {
           value: ethers.utils.parseEther(ethValue.toString()),
         })
         .then((val) => {
