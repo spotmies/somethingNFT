@@ -1,8 +1,14 @@
 import Head from "next/head";
-import Image from "next/image";
 import HomePage from "../components/home";
-import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  return <HomePage />;
+  return (
+    <>
+      <Head>
+        <title>Something - NFT</title>
+        <meta name="description" content="Meta description for the Home page" />
+      </Head>
+      <HomePage />
+    </>
+  );
 }

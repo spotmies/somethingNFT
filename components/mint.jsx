@@ -223,16 +223,16 @@ export default function Mint(props) {
   // //
   // //
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDiff(getDateDiff(new Date(), futureDate));
-      if (new Date() > futureDate) {
-        console.log("time is up");
-        // props.trigger2(true);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setDiff(getDateDiff(new Date(), futureDate));
+  //     if (new Date() > futureDate) {
+  //       console.log("time is up");
+  //       // props.trigger2(true);
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
   return (
     <div className="mint-parent">
       <div className="column your-mint">
@@ -240,7 +240,7 @@ export default function Mint(props) {
           <>
             <p className="candle-font">WE'RE NOT LIVE YET, PLAY SOMETHING.!</p>
             <p className="mint-counter">
-              {diff?.day}D:{diff?.hour}H:{diff?.minute}M:{diff?.second}S
+              {/* {diff?.day}D:{diff?.hour}H:{diff?.minute}M:{diff?.second}S */}
             </p>
           </>
         ) : (

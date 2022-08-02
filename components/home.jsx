@@ -210,7 +210,10 @@ export default function HomePage() {
               window.open("https://twitter.com/itssomethingNFT", "_blank");
             }}
           />
-          <p className="connect-wallet pointer" onClick={requestAccount}>
+          <p
+            className="connect-wallet pointer agency-font"
+            onClick={requestAccount}
+          >
             {wallets === "" ? "Connect wallet" : "0x..." + wallets}
           </p>
         </div>
