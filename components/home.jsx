@@ -7,11 +7,12 @@ import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 
 export default function HomePage() {
   const [wallets, setWallets] = useState("");
-  const [currentMintCount, setCurrentMintCount] = useState(0);
+  const [currentMintCount, setCurrentMintCount] = useState(1);
   const [NFTCount, setNFTCount] = useState(1);
   const [walletAddress, setWalletAddress] = useState("");
   // const [quantity, setQuantity] = useState(1);
   // const [chainId, setChainId] = useState(1);
+  const [outOfShit,setOutofshit] = useState(false);
 
   // Google analytics constants
   const gaWalletTracker = useAnalyticsEventTracker("wallet");
@@ -95,7 +96,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0x489BAa2E19159F3D04748902B1f3E2f48E0e85D1";
+      const contractAddress = "0x3f8C98d98EA2ba80546CF349ED5756770702BF83";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -106,7 +107,7 @@ export default function HomePage() {
       // console.log("contract", contract);
       return contract;
     } catch (error) {
-      console.log("error", error);
+      console.log("error, getcontract", error);
     }
   };
 
@@ -121,6 +122,9 @@ export default function HomePage() {
 
     try {
       const TotalMinted = await getContract().totalSupply();
+      const userMinted = await getContract().userMints();
+      console.log("userMints:  ", userMinted);
+      console.log("myMints", parseInt(userMinted._hex, 16));
       console.log("totalMinted", TotalMinted);
       console.log(parseInt(TotalMinted._hex, 16));
       try {
@@ -150,14 +154,13 @@ export default function HomePage() {
         return;
       }
 
-      if (currentMintCount + NFTCount > 1000) {
-        var ethValue = NFTCount * 0.003;
-      } else {
-        var ethValue = NFTCount * 0;
-      }
-
-      getContract()
-        .mint(NFTCount, {
+      // if (currentMintCount + NFTCount > 1000) {
+      //   var ethValue = NFTCount * 0.003;
+      // } else {
+      //   var ethValue = NFTCount * 0;
+      // }
+      // var ethValue = NFTCount * 0.003;
+      getContract().mint(NFTCount, {
           value: ethers.utils.parseEther(ethValue.toString()),
         })
         .then((val) => {
@@ -174,7 +177,7 @@ export default function HomePage() {
           // console.log("errorm", error.message);
         });
     } catch (error) {
-      console.log("error91", error?.reason);
+      console.log("error91, mint button", error?.reason);
     }
 
     //console.log(result);
