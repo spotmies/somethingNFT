@@ -7,10 +7,17 @@ import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import axios from "axios";
 
 export default function HomePage() {
+  const whiteList = [
+    "0xa93d490ba7cfaa49cbc026d3bfacbfdc2d3e0551",
+    "0x4b9bdc483e13f4cfb31bc5aec362460718747286",
+  ];
+
   const [wallets, setWallets] = useState("");
   const [currentMintCount, setCurrentMintCount] = useState(1);
   const [NFTCount, setNFTCount] = useState(1);
   const [walletAddress, setWalletAddress] = useState("");
+  const [walltetAddressSmall, setWalltetAddressSmall] = useState("");
+  const [userMints, setUserMints] = useState(null);
   // const [quantity, setQuantity] = useState(1);
   // const [chainId, setChainId] = useState(1);
   const [outOfShit, setOutofshit] = useState(false);
@@ -43,6 +50,9 @@ export default function HomePage() {
       ) {
         setWallets(window.ethereum.selectedAddress.slice(-4));
         setWalletAddress(window?.ethereum?.selectedAddress);
+        setWalltetAddressSmall(
+          window?.ethereum?.selectedAddress.toLocaleLowerCase()
+        );
       }
     }, 1000);
     setTimeout(() => {
@@ -81,6 +91,8 @@ export default function HomePage() {
         setWallets(accounts[0].slice(-4));
         console.log(accounts[0]);
         setWalletAddress(accounts[0]);
+        setWalltetAddressSmall(accounts[0].toLocaleLowerCase());
+        // console.log("account", accounts[0].toLocaleLowerCase());
         createPost(accounts[0]);
       } catch (error) {
         // console.log("Error connecting....");
@@ -110,7 +122,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0x3f8C98d98EA2ba80546CF349ED5756770702BF83";
+      const contractAddress = "0xFa1c9a99CA7ff8C36BE029d2d3e21cB96C285fD7";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -139,6 +151,7 @@ export default function HomePage() {
       const userMinted = await getContract().userMints();
       console.log("userMints:  ", userMinted);
       console.log("myMints", parseInt(userMinted._hex, 16));
+      setUserMints(parseInt(userMinted._hex, 16));
       console.log("totalMinted", TotalMinted);
       console.log(parseInt(TotalMinted._hex, 16));
       try {
@@ -166,6 +179,21 @@ export default function HomePage() {
       if (NFTCount < 1) {
         alert("Please enter valid quantity");
         return;
+      }
+      let ethValue = NFTCount * 0.003;
+      if (whiteList.includes(walltetAddressSmall)) {
+        console.log("whitelisted", walltetAddressSmall);
+        if (userMints === null) {
+          alert("Please connect to wallet");
+          return;
+        } else if (userMints < 3) {
+          ethValue = ethValue - NFTCount * 0.003 - (3 - userMints) * 0.003;
+        }
+      } else {
+        console.log("not whitelisted", walltetAddressSmall);
+        if (userMints == 0) {
+          ethValue = ethValue - 0.003;
+        }
       }
 
       // if (currentMintCount + NFTCount > 1000) {
