@@ -100,7 +100,7 @@ export default function HomePage() {
       console.log("chainId", chainId);
       // setChainId(chainId);
 
-      if (chainId !== 1) {
+      if (chainId !== 3) {
         alert("Please connect to Ethereum Mainnet");
       }
     } catch (error) {
@@ -110,7 +110,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0x3f8C98d98EA2ba80546CF349ED5756770702BF83";
+      const contractAddress = "0x8C58C051572655bb051fF8f2F71859b3cABb4172";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -136,7 +136,7 @@ export default function HomePage() {
 
     try {
       const TotalMinted = await getContract().totalSupply();
-      const userMinted = await getContract().userMints();
+      const userMinted = await getContract().userMint();
       console.log("userMints:  ", userMinted);
       console.log("myMints", parseInt(userMinted._hex, 16));
       console.log("totalMinted", TotalMinted);
