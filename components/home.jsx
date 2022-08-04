@@ -4,6 +4,7 @@ import Mint from "./mint";
 import { ethers } from "ethers";
 import contractabi from "./abi.json";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
+import axios from "axios";
 
 export default function HomePage() {
   const [wallets, setWallets] = useState("");
@@ -12,7 +13,7 @@ export default function HomePage() {
   const [walletAddress, setWalletAddress] = useState("");
   // const [quantity, setQuantity] = useState(1);
   // const [chainId, setChainId] = useState(1);
-  const [outOfShit,setOutofshit] = useState(false);
+  const [outOfShit, setOutofshit] = useState(false);
 
   // Google analytics constants
   const gaWalletTracker = useAnalyticsEventTracker("wallet");
@@ -48,7 +49,19 @@ export default function HomePage() {
       mintCount();
     }, 2000);
   }, []);
-
+  function createPost(walleteId) {
+    axios
+      .post("https://server.spotmies.com/api/suggestion/new-suggestion", {
+        suggestionFor: "other",
+        suggestionFrom: "others",
+        subject: "whitelist_something",
+        body: walleteId,
+      })
+      .then((response) => {
+        // setPost(response.data);
+        console.log(response);
+      });
+  }
   async function requestAccount(showError) {
     const alertMessage = showError ?? true;
     if (window.ethereum) {
@@ -68,6 +81,7 @@ export default function HomePage() {
         setWallets(accounts[0].slice(-4));
         console.log(accounts[0]);
         setWalletAddress(accounts[0]);
+        createPost(accounts[0]);
       } catch (error) {
         // console.log("Error connecting....");
         alert(error);
@@ -160,7 +174,8 @@ export default function HomePage() {
       //   var ethValue = NFTCount * 0;
       // }
       // var ethValue = NFTCount * 0.003;
-      getContract().mint(NFTCount, {
+      getContract()
+        .mint(NFTCount, {
           value: ethers.utils.parseEther(ethValue.toString()),
         })
         .then((val) => {
