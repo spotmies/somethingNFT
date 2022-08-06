@@ -10,6 +10,10 @@ export default function HomePage() {
   const whiteList = [
     "0xa93d490ba7cfaa49cbc026d3bfacbfdc2d3e0551",
     "0x4b9bdc483e13f4cfb31bc5aec362460718747286",
+    "0xf8e730cc0d8a30ca391cc6822f6dd64173199a73",
+    "0x9c966518dbb886288afbb202a0824c570bac3731",
+    "0xe99b128c4754e35cca1ac83a091d607f0df586f8",
+    "0x5802440693876cfe6f7f6756774ad0b976a5d387",
   ];
 
   const [wallets, setWallets] = useState("");
@@ -26,6 +30,16 @@ export default function HomePage() {
   const gaWalletTracker = useAnalyticsEventTracker("wallet");
   const gaMintTracker = useAnalyticsEventTracker("mint");
   const gaOtherTracker = useAnalyticsEventTracker("others");
+
+  const changeNftCount = (count) => {
+    if (count == "+") {
+      setNFTCount(NFTCount + 1);
+    } else {
+      if (NFTCount > 1) {
+        setNFTCount(NFTCount - 1);
+      }
+    }
+  };
 
   //
   //
@@ -122,7 +136,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0xFa1c9a99CA7ff8C36BE029d2d3e21cB96C285fD7";
+      const contractAddress = "0x8C58C051572655bb051fF8f2F71859b3cABb4172";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -143,12 +157,12 @@ export default function HomePage() {
     if (!window.ethereum) {
       //alert("Metamask not detected");
       console.log("Metamask not detected");
-      return;
+      return null;
     }
 
     try {
       const TotalMinted = await getContract().totalSupply();
-      const userMinted = await getContract().userMints();
+      const userMinted = await getContract().userMint();
       console.log("userMints:  ", userMinted);
       console.log("myMints", parseInt(userMinted._hex, 16));
       setUserMints(parseInt(userMinted._hex, 16));
@@ -163,14 +177,16 @@ export default function HomePage() {
       } catch (error) {
         setCurrentMintCount(2000);
       }
+      return parseInt(userMinted._hex, 16);
 
       // setCurrentMintCount(3769);
     } catch (err) {
       console.log("mintcount error", err);
+      return null;
     }
   };
 
-  const mintToken = async () => {
+  const mintToken = async (userMintArg) => {
     // const connection = contract.connect(signer);
     // const addr = connection.address;
     // const supply = await contract.suppliedNFTs();
@@ -180,19 +196,22 @@ export default function HomePage() {
         alert("Please enter valid quantity");
         return;
       }
-      let ethValue = NFTCount * 0.003;
+      let ethValue = NFTCount * 0.005;
       if (whiteList.includes(walltetAddressSmall)) {
         console.log("whitelisted", walltetAddressSmall);
-        if (userMints === null) {
+        if (userMintArg === null) {
           alert("Please connect to wallet");
           return;
-        } else if (userMints < 3) {
-          ethValue = ethValue - NFTCount * 0.003 - (3 - userMints) * 0.003;
+        } else if (userMintArg == 0) {
+          ethValue = NFTCount * 0.003 - ((3 - userMintArg) * 0.003).toFixed(3);
+          if (ethValue < 0) {
+            ethValue = 0;
+          }
         }
       } else {
         console.log("not whitelisted", walltetAddressSmall);
-        if (userMints == 0) {
-          ethValue = ethValue - 0.003;
+        if (userMintArg == 0) {
+          ethValue = NFTCount * 0.003 - ((1 - userMintArg) * 0.003).toFixed(3);
         }
       }
 
@@ -202,12 +221,15 @@ export default function HomePage() {
       //   var ethValue = NFTCount * 0;
       // }
       // var ethValue = NFTCount * 0.003;
+      console.log(NFTCount, ethValue);
       getContract()
         .mint(NFTCount, {
           value: ethers.utils.parseEther(ethValue.toString()),
         })
         .then((val) => {
           alert("Token minted successfully");
+
+          mintCount();
           // console.log("val", val);
           // console.log("error", error);
         })
@@ -226,11 +248,13 @@ export default function HomePage() {
     //console.log(result);
   };
 
-  const clickedMint = () => {
+  const clickedMint = async () => {
     requestAccount(false);
     getChainId();
-    mintCount();
-    mintToken();
+    let userMints = await mintCount();
+    if (userMints != null) {
+      mintToken(userMints);
+    }
   };
 
   //
@@ -264,7 +288,11 @@ export default function HomePage() {
           </p>
         </div>
       </div>
-      <Mint clickedMint={clickedMint} />
+      <Mint
+        clickedMint={clickedMint}
+        changeCount={changeNftCount}
+        mintCount={NFTCount}
+      />
       <Game />
     </div>
   );

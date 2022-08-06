@@ -52,7 +52,7 @@ export default function Game() {
         window.getComputedStyle(block).getPropertyValue("left")
       );
       // console.log(blockLeft, window.getComputedStyle(block));
-      let cutOff = blockRef.current.clientWidth * 0.9;
+      let cutOff = blockRef?.current?.clientWidth * 0.9;
       // console.log(cutOff);
       if (blockLeft > cutOff && characterTop >= 40) {
         block.style.animation = "none";

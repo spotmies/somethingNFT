@@ -18,7 +18,7 @@ const getDateDiff = (date1, date2) => {
   };
 };
 export default function Mint(props) {
-  const [mintStarted, setMintStarted] = useState(true);
+  const [mintStarted, setMintStarted] = useState(false);
   const [diff, setDiff] = useState({
     day: 0,
     hour: 0,
@@ -246,7 +246,22 @@ export default function Mint(props) {
         ) : (
           <>
             <p className="candle-font">SOMETHING IS MINTING</p>
-            <p className="agency-font">.003 Ξ, 1 FREE per wallet.</p>
+            <p className="agency-font">.005 Ξ, 1 FREE per wallet.</p>
+            <div className="mint-control-div">
+              <p
+                className="mint-cnt agency-font"
+                onClick={() => props.changeCount("-")}
+              >
+                -
+              </p>
+              <p className="agency-font">{props.mintCount}</p>
+              <p
+                className="mint-cnt agency-font"
+                onClick={() => props.changeCount("+")}
+              >
+                +
+              </p>
+            </div>
             <p className="mint-btn agency-font" onClick={props?.clickedMint}>
               MINT
             </p>
