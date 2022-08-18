@@ -238,7 +238,10 @@ export default function Mint(props) {
       <div className="column your-mint">
         {!mintStarted ? (
           <>
-            <p className="candle-font">WE'RE NOT LIVE YET, PLAY SOMETHING.!</p>
+            {/* <p className="candle-font">WE'RE NOT LIVE YET, PLAY SOMETHING.!</p> */}
+            <p className="candle-font">
+              Something mint will be live on <br /> 19th Aug 2022 at 10 AM EST
+            </p>
             <p className="mint-counter">
               {/* {diff?.day}D:{diff?.hour}H:{diff?.minute}M:{diff?.second}S */}
             </p>

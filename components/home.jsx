@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import contractabi from "./abi.json";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import axios from "axios";
+import constants from "./constants";
 
 export default function HomePage() {
   const whiteList = [
@@ -197,7 +198,13 @@ export default function HomePage() {
         return;
       }
       let ethValue = NFTCount * 0.005;
-      if (whiteList.includes(walltetAddressSmall)) {
+      let isWhiteList = false;
+      constants.whiteList.forEach((item) => {
+        if (item.toLowerCase() === email.toLowerCase()) {
+          isWhiteList = true;
+        }
+      });
+      if (isWhiteList) {
         console.log("whitelisted", walltetAddressSmall);
         if (userMintArg === null) {
           alert("Please connect to wallet");
