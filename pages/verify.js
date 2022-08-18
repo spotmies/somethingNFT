@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
-import { MdCached, MdCircle, MdSearch } from "react-icons/md";
+import { MdCached, MdSearch } from "react-icons/md";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from "@material-ui/core/InputBase";
 import constants from "../components/constants";
-import { CircularProgress } from "@material-ui/core";
 export default function Verify() {
   const emailRef = useRef(null);
   const [isWhiteList, setisWhiteList] = useState(null);
