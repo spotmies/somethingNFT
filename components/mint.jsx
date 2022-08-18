@@ -18,7 +18,7 @@ const getDateDiff = (date1, date2) => {
   };
 };
 export default function Mint(props) {
-  const [mintStarted, setMintStarted] = useState(false);
+  const [mintStarted, setMintStarted] = useState(true);
   const [diff, setDiff] = useState({
     day: 0,
     hour: 0,

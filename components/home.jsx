@@ -137,7 +137,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0x8C58C051572655bb051fF8f2F71859b3cABb4172";
+      const contractAddress = "0xA8eBB982A96cbD43aE75c20510F11ed3ECE54842";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -210,7 +210,7 @@ export default function HomePage() {
           alert("Please connect to wallet");
           return;
         } else if (userMintArg == 0) {
-          ethValue = NFTCount * 0.003 - ((3 - userMintArg) * 0.003).toFixed(3);
+          ethValue = NFTCount * 0.002 - ((3 - userMintArg) * 0.002).toFixed(3);
           if (ethValue < 0) {
             ethValue = 0;
           }
@@ -218,16 +218,16 @@ export default function HomePage() {
       } else {
         console.log("not whitelisted", walltetAddressSmall);
         if (userMintArg == 0) {
-          ethValue = NFTCount * 0.003 - ((1 - userMintArg) * 0.003).toFixed(3);
+          ethValue = NFTCount * 0.002 - ((1 - userMintArg) * 0.002).toFixed(3);
         }
       }
 
       // if (currentMintCount + NFTCount > 1000) {
-      //   var ethValue = NFTCount * 0.003;
+      //   var ethValue = NFTCount * 0.002;
       // } else {
       //   var ethValue = NFTCount * 0;
       // }
-      // var ethValue = NFTCount * 0.003;
+      // var ethValue = NFTCount * 0.002;
       console.log(NFTCount, ethValue);
       getContract()
         .mint(NFTCount, {
