@@ -137,7 +137,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0xA8eBB982A96cbD43aE75c20510F11ed3ECE54842";
+      const contractAddress = "0xbca3469F8d7F56da25B11A61C0EF7db3A03b0d0c";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -200,7 +200,7 @@ export default function HomePage() {
       let ethValue = NFTCount * 0.005;
       let isWhiteList = false;
       constants.whiteList.forEach((item) => {
-        if (item.toLowerCase() === email.toLowerCase()) {
+        if (item.toLowerCase() === walltetAddressSmall.toLowerCase()) {
           isWhiteList = true;
         }
       });
@@ -210,7 +210,7 @@ export default function HomePage() {
           alert("Please connect to wallet");
           return;
         } else if (userMintArg == 0) {
-          ethValue = NFTCount * 0.002 - ((3 - userMintArg) * 0.002).toFixed(3);
+          ethValue = NFTCount * 0.002 - ((1 - userMintArg) * 0.002).toFixed(3);
           if (ethValue < 0) {
             ethValue = 0;
           }
@@ -218,7 +218,7 @@ export default function HomePage() {
       } else {
         console.log("not whitelisted", walltetAddressSmall);
         if (userMintArg == 0) {
-          ethValue = NFTCount * 0.002 - ((1 - userMintArg) * 0.002).toFixed(3);
+          ethValue = NFTCount * 0.005 - ((1 - userMintArg) * 0.005).toFixed(3);
         }
       }
 
@@ -249,7 +249,7 @@ export default function HomePage() {
           // console.log("errorm", error.message);
         });
     } catch (error) {
-      console.log("error91, mint button", error?.reason);
+      console.log("error91, mint button", error);
     }
 
     //console.log(result);
@@ -259,6 +259,7 @@ export default function HomePage() {
     requestAccount(false);
     getChainId();
     let userMints = await mintCount();
+    console.log("userMints", userMints);
     if (userMints != null) {
       mintToken(userMints);
     }
