@@ -8,5 +8,6 @@ module.exports = {
     path: "",
   },
   nextConfig,
+  trailingSlash: true,
 };
 // module.exports = nextConfig
