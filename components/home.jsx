@@ -342,7 +342,7 @@ export default function HomePage() {
           </p>
         </div>
       </div>
-      <button onClick={isValid}></button>
+      {/* <button onClick={isValid}></button> */}
       <Mint
         clickedMint={clickedMint}
         changeCount={changeNftCount}
