@@ -72,6 +72,7 @@ export default function HomePage() {
         setWalltetAddressSmall(
           window?.ethereum?.selectedAddress.toLocaleLowerCase()
         );
+        checkWl(window?.ethereum?.selectedAddress.toLocaleLowerCase());
       }
     }, 1000);
     setTimeout(() => {
@@ -95,6 +96,7 @@ export default function HomePage() {
     const alertMessage = showError ?? true;
     if (window.ethereum) {
       if (wallets !== "") {
+        checkWl(walltetAddressSmall);
         if (alertMessage) alert("Wallet already connected");
         return;
       }
@@ -111,16 +113,7 @@ export default function HomePage() {
         console.log(accounts[0]);
         setWalletAddress(accounts[0]);
         setWalltetAddressSmall(accounts[0].toLocaleLowerCase());
-        let isWhiteList = false;
-        constants.whiteList.forEach((item) => {
-          if (item.toLowerCase() === accounts[0].toLocaleLowerCase()) {
-            isWhiteList = true;
-          }
-        });
-        console.log("is whitelist", isWhiteList);
-        if (isWhiteList) {
-          setTimeStamp(whiteListDate);
-        }
+        checkWl(accounts[0].toLocaleLowerCase());
         // console.log("account", accounts[0].toLocaleLowerCase());
         // createPost(accounts[0]);
       } catch (error) {
@@ -133,7 +126,18 @@ export default function HomePage() {
       alert("Metamask not detected");
     }
   }
-
+  function checkWl(walleteAddress) {
+    let isWhiteList = false;
+    constants.whiteList.forEach((item) => {
+      if (item.toLowerCase() === walleteAddress) {
+        isWhiteList = true;
+      }
+    });
+    console.log("is whitelist", isWhiteList);
+    if (isWhiteList) {
+      setTimeStamp(whiteListDate);
+    }
+  }
   const getChainId = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window?.ethereum);
