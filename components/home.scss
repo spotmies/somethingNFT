@@ -212,7 +212,7 @@
   }
 }
 
-@media screen and (min-height: 830px) {
+@media screen and (max-width: 500px) {
   .form-controler {
     width: 80vw !important;
   }
