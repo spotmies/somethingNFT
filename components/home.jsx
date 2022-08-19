@@ -6,6 +6,8 @@ import contractabi from "./abi.json";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import axios from "axios";
 import constants from "./constants";
+const { MerkleTree } = require("merkletreejs");
+const keccak256 = require("keccak256");
 
 export default function HomePage() {
   const whiteList = [
@@ -18,7 +20,9 @@ export default function HomePage() {
   ];
   const futureDate = new Date(1660917600000);
   // const futureDate = new Date(1660889040000);
-  const whiteListDate = new Date(1660914000000);
+  // const whiteListDate = new Date(1660914000000);
+  const whiteListDate = new Date(1660917600000);
+
   const [timeStamp, setTimeStamp] = useState(futureDate);
   const [wallets, setWallets] = useState("");
   const [currentMintCount, setCurrentMintCount] = useState(1);
@@ -46,6 +50,22 @@ export default function HomePage() {
     }
   };
 
+  const leaves = constants.whiteList.map((x) => keccak256(x));
+  const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
+  const buf2hex = (x) => "0x" + x.toString("hex");
+
+  const proof = tree
+    .getProof(buf2hex(keccak256(walletAddress)))
+    .map((x) => buf2hex(x.data));
+
+  const leaf = buf2hex(keccak256(walletAddress));
+
+  console.log("My leaf:", buf2hex(keccak256(walletAddress)));
+  console.log(
+    "Proof:",
+    tree.getProof(buf2hex(keccak256(walletAddress))).map((x) => buf2hex(x.data))
+  );
+  console.log("Root Hash:", buf2hex(tree.getRoot()));
   //
   //
   // End of Contract Integration constants
@@ -155,7 +175,7 @@ export default function HomePage() {
 
   const getContract = () => {
     try {
-      const contractAddress = "0xbca3469F8d7F56da25B11A61C0EF7db3A03b0d0c";
+      const contractAddress = "";
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
@@ -168,6 +188,11 @@ export default function HomePage() {
     } catch (error) {
       console.log("error, getcontract", error);
     }
+  };
+
+  const isValid = async () => {
+    const isValid = await getContract().MerkleVerify(proof, leaf);
+    console.log("isValid?", isValid);
   };
 
   const mintCount = async () => {
@@ -222,6 +247,7 @@ export default function HomePage() {
           isWhiteList = true;
         }
       });
+      console.log("is whitelist", isWhiteList);
       if (isWhiteList) {
         console.log("whitelisted", walltetAddressSmall);
         if (userMintArg === null) {
@@ -232,11 +258,13 @@ export default function HomePage() {
           if (ethValue < 0) {
             ethValue = 0;
           }
+        } else {
+          ethValue = (NFTCount * 0.002).toFixed(3);
         }
       } else {
         console.log("not whitelisted", walltetAddressSmall);
         if (userMintArg == 0) {
-          ethValue = NFTCount * 0.005 - ((1 - userMintArg) * 0.005).toFixed(3);
+          ethValue = (NFTCount * 0.005 - (1 - userMintArg) * 0.005).toFixed(3);
         }
       }
 
@@ -246,9 +274,9 @@ export default function HomePage() {
       //   var ethValue = NFTCount * 0;
       // }
       // var ethValue = NFTCount * 0.002;
-      console.log(NFTCount, ethValue);
+      console.log("final", NFTCount, ethValue);
       getContract()
-        .mint(NFTCount, {
+        .mint(NFTCount, proof, leaf, {
           value: ethers.utils.parseEther(ethValue.toString()),
         })
         .then((val) => {
@@ -314,6 +342,7 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+      <button onClick={isValid}></button>
       <Mint
         clickedMint={clickedMint}
         changeCount={changeNftCount}

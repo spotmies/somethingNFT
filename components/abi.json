@@ -2,6 +2,19 @@
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "_root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "addRootHash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint96",
         "name": "_royaltyFeesInBips",
         "type": "uint96"
@@ -10,6 +23,11 @@
         "internalType": "string",
         "name": "_contractURI",
         "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_root",
+        "type": "bytes32"
       }
     ],
     "stateMutability": "nonpayable",
@@ -59,6 +77,16 @@
         "internalType": "uint256",
         "name": "quantity",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "proof",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "leaf",
+        "type": "bytes32"
       }
     ],
     "name": "mint",
@@ -251,6 +279,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "_whitestamp",
+        "type": "uint32"
+      }
+    ],
+    "name": "setWLTimer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "TransferCallerNotOwnerNorApproved",
     "type": "error"
@@ -412,19 +453,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint32",
-        "name": "_whitestamp",
-        "type": "uint32"
-      }
-    ],
-    "name": "setWLTimer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -521,6 +549,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "checkWL",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -553,6 +594,30 @@
       }
     ],
     "name": "isApprovedForAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "proof",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "leaf",
+        "type": "bytes32"
+      }
+    ],
+    "name": "MerkleVerify",
     "outputs": [
       {
         "internalType": "bool",
@@ -629,6 +694,19 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "root",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
