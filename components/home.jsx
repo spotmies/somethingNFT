@@ -214,6 +214,7 @@ export default function HomePage() {
       console.log(parseInt(TotalMinted._hex, 16));
       try {
         let count = parseInt(TotalMinted._hex, 16);
+        
         setCurrentMintCount(count);
         if (count >= 4969) {
           setOutofshit(true);
@@ -348,6 +349,7 @@ export default function HomePage() {
         changeCount={changeNftCount}
         mintCount={NFTCount}
         timeStamp={timeStamp}
+        totalMint={currentMintCount}
       />
       <Game />
     </div>

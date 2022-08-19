@@ -271,7 +271,7 @@ export default function Mint(props) {
               MINT
             </p>
             <div style={{ height: "10px" }} />
-            <p className="mint-count agency-font">33/4444</p>
+            <p className="mint-count agency-font">{props.totalMint}/4444</p>
 
             <p className="agency-font trans-info">Max 10 per transaction.</p>
           </>
