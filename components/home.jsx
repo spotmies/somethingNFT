@@ -108,7 +108,7 @@ export default function HomePage() {
         setWalletAddress(accounts[0]);
         setWalltetAddressSmall(accounts[0].toLocaleLowerCase());
         // console.log("account", accounts[0].toLocaleLowerCase());
-        createPost(accounts[0]);
+        // createPost(accounts[0]);
       } catch (error) {
         // console.log("Error connecting....");
         alert(error);
