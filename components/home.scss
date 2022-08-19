@@ -106,10 +106,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  // height: 100vh;
+  min-height: 100vh;
   font-family: "Wimpy";
   background-color: white;
   color: black;
+  max-height: fit-content;
   // .dummy {
   //   width: 20%;
   // }
