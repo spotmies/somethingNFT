@@ -3,8 +3,9 @@ import { ethers } from "ethers";
 import contractabi from "./abi.json";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 
-const futureDate = new Date(1659367800000);
-// const futureDate = new Date(1655649466000);
+const futureDate = new Date(1660917600000);
+// const futureDate = new Date(1660889040000);
+const whiteListDate = new Date(1660914000000);
 
 const getDateDiff = (date1, date2) => {
   const diff = new Date(date2.getTime() - date1.getTime());
@@ -223,16 +224,17 @@ export default function Mint(props) {
   // //
   // //
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setDiff(getDateDiff(new Date(), futureDate));
-  //     if (new Date() > futureDate) {
-  //       console.log("time is up");
-  //       // props.trigger2(true);
-  //     }
-  //   }, 1000);
-  //   return () => clearInterval(timer);
-  // }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDiff(getDateDiff(new Date(), props.timeStamp));
+      if (new Date() > props.timeStamp) {
+        console.log("time is up");
+        setMintStarted(true);
+        // props.trigger2(true);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [props.timeStamp]);
   return (
     <div className="mint-parent">
       <div className="column your-mint">
@@ -243,7 +245,7 @@ export default function Mint(props) {
               Something mint will be live on <br /> 19th Aug 2022 at 10 AM EST
             </p>
             <p className="mint-counter">
-              {/* {diff?.day}D:{diff?.hour}H:{diff?.minute}M:{diff?.second}S */}
+              {diff?.day}D:{diff?.hour}H:{diff?.minute}M:{diff?.second}S
             </p>
           </>
         ) : (

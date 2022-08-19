@@ -16,7 +16,10 @@ export default function HomePage() {
     "0xe99b128c4754e35cca1ac83a091d607f0df586f8",
     "0x5802440693876cfe6f7f6756774ad0b976a5d387",
   ];
-
+  const futureDate = new Date(1660917600000);
+  // const futureDate = new Date(1660889040000);
+  const whiteListDate = new Date(1660914000000);
+  const [timeStamp, setTimeStamp] = useState(futureDate);
   const [wallets, setWallets] = useState("");
   const [currentMintCount, setCurrentMintCount] = useState(1);
   const [NFTCount, setNFTCount] = useState(1);
@@ -34,6 +37,7 @@ export default function HomePage() {
 
   const changeNftCount = (count) => {
     if (count == "+") {
+      if (NFTCount > 9) return;
       setNFTCount(NFTCount + 1);
     } else {
       if (NFTCount > 1) {
@@ -107,6 +111,16 @@ export default function HomePage() {
         console.log(accounts[0]);
         setWalletAddress(accounts[0]);
         setWalltetAddressSmall(accounts[0].toLocaleLowerCase());
+        let isWhiteList = false;
+        constants.whiteList.forEach((item) => {
+          if (item.toLowerCase() === accounts[0].toLocaleLowerCase()) {
+            isWhiteList = true;
+          }
+        });
+        console.log("is whitelist", isWhiteList);
+        if (isWhiteList) {
+          setTimeStamp(whiteListDate);
+        }
         // console.log("account", accounts[0].toLocaleLowerCase());
         // createPost(accounts[0]);
       } catch (error) {
@@ -300,6 +314,7 @@ export default function HomePage() {
         clickedMint={clickedMint}
         changeCount={changeNftCount}
         mintCount={NFTCount}
+        timeStamp={timeStamp}
       />
       <Game />
     </div>
