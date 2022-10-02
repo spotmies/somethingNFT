@@ -238,6 +238,9 @@ export default function Mint(props) {
   return (
     <div className="mint-parent">
       <div className="column your-mint">
+        <div className="mint-title" onClick={props.baseURI}>
+          Your Mint
+        </div>
         {!mintStarted ? (
           <>
             {/* <p className="candle-font">WE'RE NOT LIVE YET, PLAY SOMETHING.!</p> */}
@@ -255,15 +258,13 @@ export default function Mint(props) {
             <div className="mint-control-div">
               <p
                 className="mint-cnt agency-font"
-                onClick={() => props.changeCount("-")}
-              >
+                onClick={() => props.changeCount("-")}>
                 -
               </p>
               <p className="agency-font">{props.mintCount}</p>
               <p
                 className="mint-cnt agency-font"
-                onClick={() => props.changeCount("+")}
-              >
+                onClick={() => props.changeCount("+")}>
                 +
               </p>
             </div>

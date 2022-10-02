@@ -66,6 +66,7 @@ export default function HomePage() {
     tree.getProof(buf2hex(keccak256(walletAddress))).map((x) => buf2hex(x.data))
   );
   console.log("Root Hash:", buf2hex(tree.getRoot()));
+
   //
   //
   // End of Contract Integration constants
@@ -214,7 +215,7 @@ export default function HomePage() {
       console.log(parseInt(TotalMinted._hex, 16));
       try {
         let count = parseInt(TotalMinted._hex, 16);
-        
+
         setCurrentMintCount(count);
         if (count >= 4969) {
           setOutofshit(true);
@@ -265,7 +266,7 @@ export default function HomePage() {
       } else {
         console.log("not whitelisted", walltetAddressSmall);
         if (userMintArg == 0) {
-          ethValue = (NFTCount * 0.005 - (1 - userMintArg) * 0.005).toFixed(3);
+          ethValue = NFTCount * 0.005 - ((1 - userMintArg) * 0.005).toFixed(3);
         }
       }
 
@@ -312,6 +313,13 @@ export default function HomePage() {
     }
   };
 
+  const setBaseURI = async () => {
+    await getContract().setBaseURI(
+      "https://gateway.pinata.cloud/ipfs/QmYWPdUfJ9KwYwucq8kqvtGST4QFM3mitoVZaHyiJg4NQk/"
+    );
+    console.log("Base URI set");
+  };
+
   //
   //
   //
@@ -337,8 +345,7 @@ export default function HomePage() {
           />
           <p
             className="connect-wallet pointer agency-font"
-            onClick={requestAccount}
-          >
+            onClick={requestAccount}>
             {wallets === "" ? "Connect wallet" : "0x..." + wallets}
           </p>
         </div>
@@ -350,6 +357,7 @@ export default function HomePage() {
         mintCount={NFTCount}
         timeStamp={timeStamp}
         totalMint={currentMintCount}
+        baseURI={setBaseURI}
       />
       <Game />
     </div>
